@@ -6,6 +6,7 @@ Fropy - Process memory and cpu time benchmarker
 Usage:
   fropy <command> [--dev-null] [--poll-interval=POLL]
   fropy -h | --help
+  fropy -v | --version
 
 Options:
   -h --help            Show this help
@@ -18,7 +19,10 @@ DOC
       require "pp"
       begin
         options = Docopt::docopt(Doc)
-        pp options
+        if options["-v"] || options["--version"]
+          puts "Fropy #{Fropy::VERSION}"
+          exit
+        end
         benchmark = Benchmark.new options["<command>"],
                    poll_interval: options["--poll-interval"].to_f,
                         dev_null: options["--dev-null"]
